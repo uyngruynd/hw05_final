@@ -1,0 +1,16 @@
+{% load thumbnail %}
+<article>
+  <ul>
+    <li>
+      Автор: {{ post.author.get_full_name }}
+      <a href="{% url 'posts:profile' post.author %}">все посты
+        пользователя</a>
+    </li>
+    <li>
+      Дата публикации: {{ post.pub_date|date:"d E Y" }}
+    </li>
+  </ul>
+  {% include 'posts/includes/thumbnail.html' %}
+  <p>{{ post.text }}</p>
+  <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a>
+</article>

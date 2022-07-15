@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block content %}
+  <p>{{ message }}</p>
+  <a href="{% url 'posts:main' %}">Возвращайтесь на главную...</a>
+{% endblock %}
