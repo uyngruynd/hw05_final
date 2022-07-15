@@ -117,7 +117,7 @@ class PostFormTests(TestCase):
             Comment.objects.filter(
                 post=post.id,
                 text='без комментариев...',
-                ).exists()
+            ).exists()
         )
         self.assertRedirects(response, reverse('posts:post_detail', kwargs={
             'post_id': post.id}))
