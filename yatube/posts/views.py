@@ -1,20 +1,24 @@
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.cache import cache_page
 
 from .utils import get_page_obj
 from .models import Group, Post, User, Follow
 from .forms import PostForm, CommentForm
 
+CACHED_SEC: int = 20
 
+
+@cache_page(CACHED_SEC)
 def index(request):
     """Функция-обработчик для главной страницы."""
     post_list = Post.objects.select_related('group')
     page_obj = get_page_obj(request, post_list)
     context = {
         'page_obj': page_obj,
+        'index': True,
     }
-
     return render(request, 'posts/index.html', context)
 
 
@@ -47,7 +51,7 @@ def profile(request, username):
     """Функция-обработчик для страницы профиля пользователя."""
     author = get_object_or_404(User, username=username)
     is_following = Follow.objects.values_list("author_id", flat=True).filter(
-        user_id=request.user.id, author_id=author.id).count() > 0
+        user_id=request.user.id, author_id=author.id).exists()
     post_list = author.posts.all()
     page_obj = get_page_obj(request, post_list)
     context = {
@@ -72,16 +76,14 @@ def post_create(request):
             new_post.author = request.user
             new_post.save()
             return redirect('posts:profile', username=request.user)
-        else:
-            return render(request, 'posts/create_post.html', {'form': form})
-    else:
         return render(request, 'posts/create_post.html', {'form': form})
+    return render(request, 'posts/create_post.html', {'form': form})
 
 
 @login_required
 def post_edit(request, post_id):
     """Функция-обработчик для редактирования существующего поста."""
-    post = get_object_or_404(Post, id=post_id)
+    post = get_object_or_404(Post, id=post_id, author_id=request.user.id)
 
     if request.user != post.author:
         return redirect('posts:post_detail', post_id=post_id)
@@ -95,13 +97,13 @@ def post_edit(request, post_id):
         if form.is_valid():
             form.save()
         return redirect('posts:post_detail', post_id=post_id)
-    else:
-        form = PostForm(instance=post)
-        context = {'form': form,
-                   'is_edit': True,
-                   'post_id': post_id,
-                   }
-        return render(request, 'posts/create_post.html', context)
+
+    form = PostForm(instance=post)
+    context = {'form': form,
+               'is_edit': True,
+               'post_id': post_id,
+               }
+    return render(request, 'posts/create_post.html', context)
 
 
 @login_required
@@ -120,13 +122,12 @@ def add_comment(request, post_id):
 @login_required
 def follow_index(request):
     """Функция-обработчик для страницы подписок."""
-    following_id = Follow.objects.values_list("author_id", flat=True).filter(
-        user_id=request.user.id)
     post_list = Post.objects.select_related('group').filter(
-        author_id__in=following_id)
+        author__following__user=request.user)
     page_obj = get_page_obj(request, post_list)
     context = {
         'page_obj': page_obj,
+        'follow': True,
     }
     return render(request, 'posts/follow.html', context)
 
@@ -148,8 +149,9 @@ def profile_follow(request, username):
 def profile_unfollow(request, username):
     """Функция-обработчик процедуры отписки."""
     author = get_object_or_404(User, username=username)
-    Follow.objects.filter(user_id=request.user.id,
-                          author_id=author.id).delete()
+    follow_qs = Follow.objects.filter(author=author, user=request.user)
+    if follow_qs.exists():
+        follow_qs.delete()
     return redirect('posts:follow_index')
 
 

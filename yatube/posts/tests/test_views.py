@@ -79,6 +79,8 @@ class PostPagesTest(TestCase):
         self.follower_client = Client()
         self.follower_client.force_login(self.follower)
 
+        cache.clear()
+
     def test_pages_uses_correct_template(self):
         """URL-адрес использует соответствующий шаблон."""
         pages_templates = {
