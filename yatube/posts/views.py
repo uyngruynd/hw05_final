@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_cookie
 
 from .utils import get_page_obj
 from .models import Group, Post, User, Follow
@@ -11,6 +12,7 @@ CACHED_SEC: int = 20
 
 
 @cache_page(CACHED_SEC)
+@vary_on_cookie
 def index(request):
     """Функция-обработчик для главной страницы."""
     post_list = Post.objects.select_related('group')
