@@ -14,16 +14,22 @@
         href="{% static 'img/fav/favicon-16x16.png' %}">
   <meta name="msapplication-TileColor" content="#000">
   <meta name="theme-color" content="#ffffff">
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>
   <title>
     {% block title %} Последние обновления на сайте {% endblock %}
   </title>
+  <style>
+      main {
+          padding-top: 65px;
+      }
+  </style>
 </head>
 <body>
 <header>
   {% include 'includes/header.html' %}
 </header>
 <main>
-  <div class="container py-5">
+  <div class="container padding-top py-5">
     {% block content %}
       Контент не подвезли :(
     {% endblock %}

@@ -1,6 +1,6 @@
 {% load static %}
 <header>
-  <nav class="navbar fixed-top navbar-light shadow rounded"
+  <nav class="navbar navbar-static-top fixed-top navbar-light shadow rounded"
        style="background-color: lightskyblue">
     <div class="container">
       <a class="navbar-brand" href="{% url 'posts:main' %}">
@@ -10,6 +10,15 @@
       </a>
       <ul class="nav nav-pills">
         {% with request.resolver_match.view_name as view_name %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+               href="#" role="button" aria-expanded="false">Группы</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item" href="#">Гитары</a></li>
+              <li><a class="dropdown-item" href="#">Бас-гитары</a></li>
+              <li><a class="dropdown-item" href="#">--Без группы--</a></li>
+              </li>
+            </ul>
           <li class="nav-item">
             <a class="nav-link {% if view_name == 'about:author' %}active{% endif %}"
                href="{% url 'about:author' %}">Об авторе
