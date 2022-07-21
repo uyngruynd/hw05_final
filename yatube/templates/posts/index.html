@@ -3,7 +3,7 @@
 {% block content %}
   {% include 'posts/includes/switcher.html' %}
   {% cache 20 index_page %}
-    <h1 class="text-muted">Последние обновления на сайте</h1>
+    <h1 class="text-muted text-center">Последние обновления на сайте</h1>
     {% for post in page_obj %}
       <div class="card mt-3">
         <div class="card-body">

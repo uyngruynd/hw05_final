@@ -2,7 +2,7 @@
 {% load static %}
 {% block title %} Записи сообщества: {{ group }} {% endblock %}
 {% block content %}
-    <h1 class="text-muted">{{ group.title }}</h1>
+    <h1 class="text-muted text-center">{{ group.title }}</h1>
     <p>{{ group.description }}</p>
     {% for post in page_obj %}
       {% include 'posts/includes/post_list.html' %}

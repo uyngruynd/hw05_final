@@ -1,6 +1,6 @@
 {% load static %}
 <header>
-  <nav class="navbar fixed-top navbar-light"
+  <nav class="navbar fixed-top navbar-light shadow rounded"
        style="background-color: lightskyblue">
     <div class="container">
       <a class="navbar-brand" href="{% url 'posts:main' %}">
@@ -35,7 +35,7 @@
                  href="{% url 'users:logout' %}">Выйти
               </a>
             </li>
-            <li>
+            <li class="nav-item py-2">
               Пользователь: {{ user.username }}
             </li>
           {% else %}
