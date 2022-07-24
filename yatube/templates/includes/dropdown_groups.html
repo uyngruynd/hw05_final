@@ -1,0 +1,18 @@
+{% load user_filters %}
+{% load cache %}
+{% get_cached_time as cached_time %}
+{% cache cached_time dropdown_item %}
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+       href="#" role="button" aria-expanded="false">Группы</a>
+    <ul class="dropdown-menu">
+      {% get_groups as groups_list %}
+      {% for group in groups_list %}
+        <li><a class="dropdown-item"
+               href="{% url 'posts:group_list' group.slug %}">{{ group.title }}</a>
+        </li>
+      {% endfor %}
+      </li>
+    </ul>
+  </li>
+{% endcache %}

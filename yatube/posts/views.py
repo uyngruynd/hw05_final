@@ -72,8 +72,14 @@ def post_create(request):
             new_post.author = request.user
             new_post.save()
             return redirect('posts:profile', username=request.user)
-        return render(request, 'posts/create_post.html', {'form': form})
-    return render(request, 'posts/create_post.html', {'form': form})
+        return render(request, 'posts/create_post.html', {
+            'form': form,
+        }
+                      )
+    return render(request, 'posts/create_post.html', {
+        'form': form,
+    }
+                  )
 
 
 @login_required
@@ -154,4 +160,7 @@ def profile_unfollow(request, username):
 def follow_error(request):
     """Функция-обработчик ошибки процедуры подписки."""
     return render(request, 'posts/error.html',
-                  context={'message': 'Ошибка при подписке!'})
+                  context={
+                      'message': 'Ошибка при подписке!',
+                  }
+                  )
