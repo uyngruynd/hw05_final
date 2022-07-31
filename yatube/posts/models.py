@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -11,6 +12,9 @@ class Group(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
     description = models.TextField()
+
+    def get_absolute_url(self):
+        return reverse('posts:group_list', kwargs={'slug': self.slug})
 
     def __str__(self):
         return self.title
@@ -50,6 +54,9 @@ class Post(models.Model):
         upload_to='posts/',
         blank=True
     )
+
+    def get_absolute_url(self):
+        return reverse('posts:post_detail', kwargs={'post_id': self.pk})
 
     def __str__(self):
         return self.text[:TEXT_LEN]

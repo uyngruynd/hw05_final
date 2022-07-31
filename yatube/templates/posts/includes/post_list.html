@@ -12,5 +12,5 @@
   </ul>
   {% include 'posts/includes/thumbnail.html' %}
   <p>{{ post.text }}</p>
-  <a href="{% url 'posts:post_detail' post.pk %}">подробная информация </a>
+  <a href="{{ post.get_absolute_url }}">подробная информация </a>
 </article>

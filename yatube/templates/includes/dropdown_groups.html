@@ -9,7 +9,7 @@
       {% get_groups as groups_list %}
       {% for group in groups_list %}
         <li><a class="dropdown-item"
-               href="{% url 'posts:group_list' group.slug %}">{{ group.title }}</a>
+               href="{{ group.get_absolute_url }}">{{ group.title }}</a>
         </li>
       {% endfor %}
       </li>

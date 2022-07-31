@@ -35,11 +35,11 @@
         <p>
           {{ post.text }}
         </p>
-        <a href="{% url 'posts:post_detail' post.id %}">подробная
+        <a href="{{ post.get_absolute_url }}">подробная
           информация </a>
         {% if post.group %}
           <br>
-          <a href="{% url 'posts:group_list' post.group.slug %}">все записи
+          <a href="{{ post.group.get_absolute_url }}">все записи
             группы</a>
         {% endif %}
         <hr>
