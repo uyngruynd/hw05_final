@@ -2,8 +2,6 @@
 {% block title %}Технологии{% endblock %}
 {% block content %}
   <div class="row py-5">
-
-
     <h1>Используемые технологии:</h1>
     <aside class="col-12 col-md-3">
       <ul class="list-group list-group-flush">
@@ -18,7 +16,8 @@
         </li>
       </ul>
     </aside>
-    <b>Документация по api сайта (ReDoc) находится <a href="{% url 'redoc' %}">тут</a>
+    <b>Документация по api сайта: <a href="{% url 'schema-swagger-ui' %}">swagger</a>,
+      <a href="{% url 'schema-redoc' %}">redoc</a>
     </b>
   </div>
 {% endblock %}
