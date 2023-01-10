@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
-{% load cache %}
+{#{% load cache %} #}
 {% block content %}
   {% include 'posts/includes/switcher.html' %}
-  {% cache 20 index_page %}
-    <h1 class="text-muted text-center">Последние обновления на сайте</h1>
-    {% for post in page_obj %}
-      <div class="card mt-3">
-        <div class="card-body">
-          {% include 'posts/includes/post_list.html' %}
-          {% if post.group %}
-            <a href="{{ post.group.get_absolute_url }}">все записи
-              группы</a>
-          {% endif %}
-        </div>
+  {#{% cache 20 index_page %}#}
+  <h1 class="text-muted text-center">Последние обновления на сайте</h1>
+  {% for post in page_obj %}
+    <div class="card mt-3">
+      <div class="card-body">
+        {% include 'posts/includes/post_list.html' %}
+        {% if post.group %}
+          <a href="{{ post.group.get_absolute_url }}">все записи
+            группы</a>
+        {% endif %}
       </div>
-    {% endfor %}
-    {% include 'posts/includes/paginator.html' %}
-  {% endcache %}
+    </div>
+  {% endfor %}
+  {% include 'posts/includes/paginator.html' %}
+  {#{% endcache %}#}
 {% endblock %}
