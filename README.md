@@ -1,3 +1,12 @@
-# hw05_final
+# Yatube
 
-[![CI](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml/badge.svg?branch=master)](https://github.com/yandex-praktikum/hw05_final/actions/workflows/python-app.yml)
+## Описание
+Проект Yatube — это платформа для публикаций, блог. 
+У пользователей есть возможность зарегистрироваться и публиковать 
+записи в своем дневнике, просматривать ленту постов, подписываться на других 
+авторов, оставлять комментарии к публикациям.
+
+
+## Технологии
+* Python 3.7
+* Django 2.2.16
